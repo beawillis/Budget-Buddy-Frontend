@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BudgetBuddy Reports</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+        <header class="top-header">
+            <div>
+                <h1>BudgetBuddy</h1>
+                <p>Monthly reports and spending insights.</p>
+            </div>
+            <nav class="top-nav">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="transactions.html">Transactions</a>
+                <a href="wallet.html">Wallet</a>
+                <a href="goals.html">Goals</a>
+                <a href="ai-assistant.html">AI Assistant</a>
+                <a href="profile.html">Profile</a>
+                <a href="settings.html">Settings</a>
+            </nav>
+        </header>
+
+        <section class="report-card">
+            <h2>Monthly Income</h2>
+            <p id="incomeReport">R0</p>
+        </section>
+
+        <section class="report-card">
+            <h2>Monthly Expenses</h2>
+            <p id="expenseReport">R0</p>
+        </section>
+
+        <section class="chart-box">
+            <h3>Income vs Expenses</h3>
+            <canvas id="financeChart"></canvas>
+        </section>
+
+        <section class="chart-box">
+            <h3>Trend report</h3>
+            <canvas id="trendChart"></canvas>
+        </section>
+
+        <div class="actions">
+            <button onclick="downloadCsv()" class="income">Download CSV</button>
+            <button onclick="exportPDF()" class="expense">Export PDF</button>
+        </div>
+    </main>
+
+    <script src="firebase-config.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="Javascript.js"></script>
+</body>
+</html>

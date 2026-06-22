@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BudgetBuddy Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand">
+        <span>BudgetBuddy</span>
+        <p>Your finance control center</p>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="active">Dashboard</a>
+        <a href="transactions.html">Transactions</a>
+        <a href="wallet.html">Wallet</a>
+        <a href="goals.html">Goals</a>
+        <a href="reports.html">Reports</a>
+        <a href="ai-assistant.html">AI Assistant</a>
+        <a href="profile.html">Profile</a>
+        <a href="settings.html">Settings</a>
+      </nav>
+      <div class="sidebar-footer">
+        <button class="sidebar-button" onclick="toggleDarkMode()">Toggle theme</button>
+        <button class="sidebar-button" onclick="logout()">Logout</button>
+      </div>
+    </aside>
+
+    <div class="page-content">
+      <header class="top-header dashboard-header">
+        <button class="menu-toggle" id="menuToggle" aria-label="Open navigation">☰</button>
+        <div>
+          <h1>BudgetBuddy Dashboard</h1>
+          <p>Secure budgeting, analytics, and financial planning in one place.</p>
+        </div>
+        <div class="profile-bar">
+          <div class="profile-chip">
+            <img id="profileAvatar" src="icons/manifest-icon.svg" alt="Profile avatar">
+            <div>
+              <strong id="profileName">Guest</strong>
+              <span id="profileEmail">guest@example.com</span>
+            </div>
+          </div>
+          <button class="small-button" onclick="document.getElementById('profileUpload').click()">Upload photo</button>
+          <input type="file" accept="image/*" id="profileUpload" hidden onchange="uploadProfilePicture(event)">
+        </div>
+      </header>
+
+      <main class="dashboard-grid">
+        <section class="stats-grid">
+          <article class="card stat-card">
+            <h3>Total balance</h3>
+            <p id="balance">R0.00</p>
+          </article>
+          <article class="card stat-card">
+            <h3>Income</h3>
+            <p id="income">R0.00</p>
+          </article>
+          <article class="card stat-card">
+            <h3>Expenses</h3>
+            <p id="expense">R0.00</p>
+          </article>
+          <article class="card stat-card">
+            <h3>Financial score</h3>
+            <p id="healthScore">0 / 100</p>
+          </article>
+        </section>
+
+        <section class="analytics-grid">
+          <div class="chart-box card">
+            <div class="section-header">
+              <h2>Income vs Expense</h2>
+              <button class="small-button" onclick="downloadCsv()">Download CSV</button>
+            </div>
+            <canvas id="financeChart"></canvas>
+          </div>
+          <div class="chart-box card">
+            <h2>Trend graph</h2>
+            <canvas id="trendChart"></canvas>
+          </div>
+        </section>
+
+        <section class="card goal-tracker">
+          <div class="section-header">
+            <h2>Goal progress</h2>
+            <button class="small-button" onclick="window.location.href='goals.html'">Manage goals</button>
+          </div>
+          <ul id="goalProgressList" class="goal-list"></ul>
+        </section>
+
+        <section class="extra-grid">
+          <div class="card">
+            <h2>Loan calculator</h2>
+            <div class="loan-grid">
+              <input type="number" id="loanAmount" placeholder="Loan amount" min="0">
+              <input type="number" id="loanRate" placeholder="Interest rate %" min="0">
+              <input type="number" id="loanTerm" placeholder="Term in years" min="0">
+            </div>
+            <button class="secondary" onclick="calculateLoan()">Calculate payment</button>
+            <p class="result-text" id="loanResult">Monthly payment: R0.00</p>
+          </div>
+
+          <div class="card">
+            <h2>Investment simulator</h2>
+            <div class="loan-grid">
+              <input type="number" id="investmentAmount" placeholder="Initial amount" min="0">
+              <input type="number" id="investmentYears" placeholder="Years" min="0">
+              <input type="number" id="investmentRate" placeholder="Return %" min="0">
+            </div>
+            <button class="secondary" onclick="simulateInvestment()">Simulate</button>
+            <p class="result-text" id="investmentResult">Projected value: R0.00</p>
+          </div>
+
+          <div class="card">
+            <h2>Emergency fund</h2>
+            <p id="emergencySummary">Build a reserve to match 3 months of expenses.</p>
+            <div class="progress-bar">
+              <div class="progress-fill" id="emergencyProgress" style="width: 0%"></div>
+            </div>
+            <p class="percentage" id="emergencyPercent">0%</p>
+          </div>
+
+          <div class="card">
+            <h2>Bill reminders</h2>
+            <div class="reminder-form">
+              <input type="text" id="reminderName" placeholder="Bill name">
+              <input type="date" id="reminderDate">
+              <button class="secondary" onclick="addReminder()">Add</button>
+            </div>
+            <ul id="reminderList" class="reminder-list"></ul>
+          </div>
+
+          <div class="card">
+            <h2>Budget categories</h2>
+            <div class="category-form">
+              <input type="text" id="categoryName" placeholder="Category name">
+              <button class="secondary" onclick="addCategory()">Add</button>
+            </div>
+            <ul id="categoryList" class="category-list"></ul>
+          </div>
+
+          <div class="card">
+            <h2>Savings challenge</h2>
+            <p id="challengeSummary">Complete weekly savings boosts to improve your score.</p>
+            <button class="secondary" onclick="startSavingsChallenge()">Start challenge</button>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div id="notification" class="notification"></div>
+  <script src="firebase-config.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="Javascript.js"></script>
+</body>
+</html>

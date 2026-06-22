@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BudgetBuddy Goals</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+        <header class="top-header">
+            <div>
+                <h1>BudgetBuddy Goals</h1>
+                <p>Set and track your savings goals.</p>
+            </div>
+            <nav class="top-nav">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="transactions.html">Transactions</a>
+                <a href="wallet.html">Wallet</a>
+                <a href="ai-assistant.html">AI Assistant</a>
+                <a href="reports.html">Reports</a>
+                <a href="profile.html">Profile</a>
+                <a href="settings.html">Settings</a>
+            </nav>
+        </header>
+
+        <section class="goals-box">
+            <h2>Create a Goal</h2>
+            <input type="text" id="goalName" placeholder="Goal name">
+            <input type="number" id="goalAmount" placeholder="Target amount">
+            <button onclick="addGoal()">Add Goal</button>
+            <ul id="goalList"></ul>
+        </section>
+    </main>
+
+    <script src="firebase-config.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="Javascript.js"></script>
+</body>
+</html>

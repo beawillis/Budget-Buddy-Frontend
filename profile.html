@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BudgetBuddy Profile</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <header class="top-header">
+      <div>
+        <h1>Profile</h1>
+        <p>Manage your account details and profile picture.</p>
+      </div>
+      <nav class="top-nav">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="transactions.html">Transactions</a>
+        <a href="wallet.html">Wallet</a>
+        <a href="goals.html">Goals</a>
+        <a href="reports.html">Reports</a>
+        <a href="ai-assistant.html">AI Assistant</a>
+        <a href="settings.html">Settings</a>
+      </nav>
+    </header>
+
+    <section class="card profile-card">
+      <h2>Account Information</h2>
+      <div class="profile-details">
+        <img id="profileAvatarLarge" src="icons/manifest-icon.svg" alt="Profile avatar">
+        <div>
+          <p><strong>Name:</strong> <span id="profileNameLarge">Guest User</span></p>
+          <p><strong>Email:</strong> <span id="profileEmailLarge">guest@example.com</span></p>
+          <p><strong>User ID:</strong> <span id="profileUid">N/A</span></p>
+          <div class="profile-actions">
+            <button onclick="document.getElementById('profileUploadFile').click()">Upload Photo</button>
+            <input type="file" accept="image/*" id="profileUploadFile" hidden onchange="uploadProfilePicture(event)">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Edit Profile</h2>
+      <div class="profile-form">
+        <label>
+          Full name
+          <input type="text" id="editProfileName" placeholder="Enter your name">
+        </label>
+        <label>
+          Email address
+          <input type="email" id="editProfileEmail" placeholder="Enter your email">
+        </label>
+        <button class="secondary" onclick="saveProfileChanges()">Save changes</button>
+      </div>
+      <p id="profileMessage"></p>
+    </section>
+  </main>
+
+  <script src="firebase-config.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="Javascript.js"></script>
+  <script>
+    function saveProfileChanges() {
+      const name = document.getElementById('editProfileName').value.trim();
+      const email = document.getElementById('editProfileEmail').value.trim();
+      const message = document.getElementById('profileMessage');
+      if (!name || !email) {
+        if (message) message.innerText = 'Name and email are required.';
+        return;
+      }
+
+      const profile = getStoredUser() || {};
+      profile.name = name;
+      profile.email = email;
+      saveUserProfile(profile);
+      loadUserProfile();
+      if (message) message.innerText = 'Profile saved.';
+    }
+
+    function refreshProfilePage() {
+      const user = getStoredUser();
+      if (!user) return;
+      document.getElementById('profileNameLarge').textContent = user.name || 'BudgetBuddy User';
+      document.getElementById('profileEmailLarge').textContent = user.email || 'user@example.com';
+      document.getElementById('profileUid').textContent = user.uid || 'N/A';
+      document.getElementById('editProfileName').value = user.name || '';
+      document.getElementById('editProfileEmail').value = user.email || '';
+      const avatarLarge = document.getElementById('profileAvatarLarge');
+      if (avatarLarge && user.photo) avatarLarge.src = user.photo;
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      refreshProfilePage();
+      window.addEventListener('profileLoaded', () => {
+        refreshProfilePage();
+      });
+    });
+  </script>
+</body>
+</html>

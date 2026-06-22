@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BudgetBuddy Login</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-card">
+      <h1>💰 BudgetBuddy</h1>
+      <p>Secure sign-in for your budgeting workspace.</p>
+
+      <input type="email" id="email" placeholder="Email address" autocomplete="username">
+      <input type="password" id="password" placeholder="Password" autocomplete="current-password">
+      <button type="button" onclick="login()">Login</button>
+
+      <p class="register-text">
+        Don’t have an account? <a href="register.html">Create one</a>
+      </p>
+      <p id="message"></p>
+    </div>
+  </div>
+
+  <script src="firebase-config.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="Javascript.js"></script>
+  <script src="login.js"></script>
+</body>
+</html>

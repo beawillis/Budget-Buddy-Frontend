@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BudgetBuddy Transactions</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+        <header class="top-header">
+            <div>
+                <h1>BudgetBuddy Transactions</h1>
+                <p>Manage your spending and income entries.</p>
+            </div>
+            <nav class="top-nav">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="wallet.html">Wallet</a>
+                <a href="goals.html">Goals</a>
+                <a href="ai-assistant.html">AI Assistant</a>
+                <a href="reports.html">Reports</a>
+                <a href="profile.html">Profile</a>
+                <a href="settings.html">Settings</a>
+            </nav>
+        </header>
+
+        <section class="transactions">
+            <h2>Add Transaction</h2>
+            <div class="transaction-form">
+                <input type="number" id="transactionAmount" placeholder="Amount" min="1">
+                <select id="transactionCategory">
+                    <option value="General">General</option>
+                    <option value="Bills">Bills</option>
+                    <option value="Groceries">Groceries</option>
+                    <option value="Transport">Transport</option>
+                    <option value="Savings">Savings</option>
+                    <option value="Investments">Investments</option>
+                </select>
+                <button onclick="addIncome()" class="income">Add Income</button>
+                <button onclick="addExpense()" class="expense">Add Expense</button>
+            </div>
+            <ul id="transactionList"></ul>
+        </section>
+    </main>
+
+    <script src="firebase-config.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="Javascript.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BudgetBuddy Wallet</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+        <header class="top-header">
+            <div>
+                <h1>BudgetBuddy Wallet</h1>
+                <p>Track your balances and transactions.</p>
+            </div>
+            <nav class="top-nav">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="transactions.html">Transactions</a>
+                <a href="goals.html">Goals</a>
+                <a href="ai-assistant.html">AI Assistant</a>
+                <a href="reports.html">Reports</a>
+                <a href="profile.html">Profile</a>
+                <a href="settings.html">Settings</a>
+            </nav>
+        </header>
+
+        <section class="wallet-grid">
+            <div class="wallet-card card">
+                <h2>Current Balance</h2>
+                <p id="balance">R0.00</p>
+            </div>
+            <div class="wallet-card card">
+                <h2>Income</h2>
+                <p id="income">R0.00</p>
+            </div>
+            <div class="wallet-card card">
+                <h2>Expenses</h2>
+                <p id="expense">R0.00</p>
+            </div>
+            <div class="wallet-card card">
+                <h2>Categories</h2>
+                <p id="categoryCount">0 active</p>
+            </div>
+        </section>
+
+        <section class="transactions">
+            <h2>Recent Transactions</h2>
+            <ul id="transactionList"></ul>
+        </section>
+    </main>
+
+    <script src="firebase-config.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="Javascript.js"></script>
+</body>
+</html>
