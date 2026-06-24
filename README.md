@@ -117,18 +117,34 @@ const FIREBASE_ENABLED = true;
 ```
 
 ### Change API Endpoint
-Edit `Javascript.js`:
+Set `window.API_BASE_URL` **before** `api.js` loads. The easiest way is to add a
+script tag in each HTML file (or in `firebase-config.js`):
+
 ```javascript
-const API_BASE_URL = "https://your-api.com";
+window.API_BASE_URL = "https://your-backend.onrender.com";
 ```
+
+The default is `http://localhost:3000`.
 
 ## 📦 Backend Integration
 
-For backend developers, all documentation is in the **`Backend/`** folder:
-- Complete API specifications
-- 28 required endpoints
-- Data models
-- Integration guides
+The frontend integrates with all 29 BudgetBuddy backend API endpoints via `api.js`:
+- **Auth** — register, login (JWT tokens)
+- **Users** — profile, avatar upload
+- **Transactions** — create, list, delete
+- **Wallet** — balance summary
+- **Categories** — create, list, delete
+- **Dashboard** — financial overview
+- **Goals** — create, list, deposit contributions
+- **Challenge** — savings challenge start/progress
+- **Emergency** — emergency fund overview
+- **Savings** — start plan, deposit, status
+- **Loans** — calculate, save calculations
+- **Investments** — simulate returns
+- **Notifications** — list user notifications
+- **Reports** — PDF export
+- **Analytics** — financial summary
+- **AI Assistant** — chat with financial assistant
 
 ## 📝 File Reference
 
@@ -145,6 +161,7 @@ For backend developers, all documentation is in the **`Backend/`** folder:
 | `profile.html` | User profile |
 | `ai-assistant.html` | AI coach |
 | `style.css` | All styling |
+| `api.js` | Backend API layer (all 29 endpoints) |
 | `Javascript.js` | Main logic |
 | `login.js, register.js` | Auth logic |
 | `ai-assistant.js` | AI logic |

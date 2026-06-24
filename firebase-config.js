@@ -9,8 +9,9 @@ const firebaseConfig = {
   appId: "<YOUR_APP_ID>"
 };
 
-// Enable Firebase after inserting your real Firebase project values above
-const FIREBASE_ENABLED = true;
+// Enable Firebase after inserting your real Firebase project values above.
+// Disabled by default because the app uses the BudgetBuddy backend API.
+const FIREBASE_ENABLED = false;
 
 // Expose globals for the frontend code
 window.firebaseConfig = firebaseConfig;

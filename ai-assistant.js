@@ -6,23 +6,32 @@ const aiResponses = {
   default: 'Focus on one financial goal at a time. Track income, cut variable costs, and keep at least three months of expenses in an emergency fund.'
 };
 
-function askAI() {
+function localFallback(prompt) {
+  if (prompt.includes('budget') || prompt.includes('spend')) return aiResponses.budget;
+  if (prompt.includes('save') || prompt.includes('savings')) return aiResponses.savings;
+  if (prompt.includes('loan') || prompt.includes('interest')) return aiResponses.loan;
+  if (prompt.includes('invest') || prompt.includes('investment')) return aiResponses.investment;
+  return aiResponses.default;
+}
+
+async function askAI() {
   const input = document.getElementById('aiInput');
   const response = document.getElementById('aiResponse');
   if (!input || !response) return;
 
-  const prompt = input.value.trim().toLowerCase();
+  const prompt = input.value.trim();
   if (!prompt) {
     response.textContent = 'Please ask a question so I can help.';
     return;
   }
 
-  let answer = aiResponses.default;
-  if (prompt.includes('budget') || prompt.includes('spend')) answer = aiResponses.budget;
-  if (prompt.includes('save') || prompt.includes('savings')) answer = aiResponses.savings;
-  if (prompt.includes('loan') || prompt.includes('interest')) answer = aiResponses.loan;
-  if (prompt.includes('invest') || prompt.includes('investment')) answer = aiResponses.investment;
-
-  response.textContent = answer;
+  response.textContent = 'Thinking...';
   input.value = '';
+
+  try {
+    const data = await api.chatAssistant(prompt);
+    response.textContent = data.message || data.response || localFallback(prompt.toLowerCase());
+  } catch (err) {
+    response.textContent = localFallback(prompt.toLowerCase());
+  }
 }
