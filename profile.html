@@ -57,19 +57,39 @@
     </section>
   </main>
 
+  <div id="notification" class="notification"></div>
   <script src="firebase-config.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="api.js"></script>
   <script src="Javascript.js"></script>
   <script>
-    function saveProfileChanges() {
+    async function saveProfileChanges() {
       const name = document.getElementById('editProfileName').value.trim();
       const email = document.getElementById('editProfileEmail').value.trim();
       const message = document.getElementById('profileMessage');
       if (!name || !email) {
         if (message) message.innerText = 'Name and email are required.';
         return;
+      }
+
+      if (hasBackendToken()) {
+        try {
+          const updated = await api.updateProfile({ name: name });
+          const profile = getStoredUser() || {};
+          profile.name = updated.name || name;
+          profile.email = updated.email || email;
+          if (updated.avatar && updated.avatar.url) profile.photo = updated.avatar.url;
+          saveUserProfile(profile);
+          loadUserProfile();
+          refreshProfilePage();
+          if (message) message.innerText = 'Profile saved.';
+          return;
+        } catch (err) {
+          if (message) message.innerText = 'Save failed: ' + err.message;
+          return;
+        }
       }
 
       const profile = getStoredUser() || {};
@@ -92,9 +112,9 @@
       if (avatarLarge && user.photo) avatarLarge.src = user.photo;
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener('DOMContentLoaded', function() {
       refreshProfilePage();
-      window.addEventListener('profileLoaded', () => {
+      window.addEventListener('profileLoaded', function() {
         refreshProfilePage();
       });
     });
