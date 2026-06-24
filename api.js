@@ -2,8 +2,7 @@
 // Centralizes all backend API calls with auth token management.
 // Set window.API_BASE_URL before this script loads to override the default.
 
-// Temporary CORS proxy for development - will be removed once backend CORS is configured
-const API_BASE_URL = window.API_BASE_URL || 'https://cors-anywhere.herokuapp.com/https://budget-buddy-backend-pq10.onrender.com';
+const API_BASE_URL = window.API_BASE_URL || 'https://budget-buddy-backend-pq10.onrender.com';
 
 const api = (() => {
   const TOKEN_KEY = 'budgetBuddyAuthToken';
