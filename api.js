@@ -2,7 +2,7 @@
 // Centralizes all backend API calls with auth token management.
 // Set window.API_BASE_URL before this script loads to override the default.
 
-const API_BASE_URL = window.API_BASE_URL || 'http://localhost:3000';
+const API_BASE_URL = window.API_BASE_URL || 'https://budget-buddy-backend-pq10.onrender.com';
 
 const api = (() => {
   const TOKEN_KEY = 'budgetBuddyAuthToken';
