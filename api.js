@@ -97,6 +97,12 @@ const api = (() => {
       headers: token ? { 'Authorization': 'Bearer ' + token } : {},
       body: formData,
     });
+    if (res.status === 401) {
+      clearToken();
+      localStorage.setItem('budgetBuddyLoggedIn', 'false');
+      window.location.href = 'login.html';
+      throw new Error('Session expired');
+    }
     if (!res.ok) {
       const err = await res.json().catch(() => ({ message: 'Upload failed' }));
       throw new Error(err.message || 'Upload failed');
