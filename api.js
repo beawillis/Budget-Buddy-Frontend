@@ -59,29 +59,43 @@ const api = (() => {
 
   // --- Auth ---
   async function register(name, email, password) {
-    const url = API_BASE_URL + '/api/v1/auth/register';
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, email, password }),
-    });
-    const data = await res.json();
-    if (!res.ok) throw Object.assign(new Error(data.message || 'Registration failed'), { status: res.status, data });
-    if (data.token) setToken(data.token);
-    return data;
+    try {
+      const url = API_BASE_URL + '/api/v1/auth/register';
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password }),
+      });
+      const data = await res.json().catch(() => ({ message: 'Invalid response from server' }));
+      if (!res.ok) throw Object.assign(new Error(data.message || 'Registration failed'), { status: res.status, data });
+      if (data.token) setToken(data.token);
+      return data;
+    } catch (err) {
+      if (err instanceof TypeError) {
+        throw Object.assign(new Error('Network error. Please check your connection and try again.'), { status: 0 });
+      }
+      throw err;
+    }
   }
 
   async function login(email, password) {
-    const url = API_BASE_URL + '/api/v1/auth/login';
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    });
-    const data = await res.json();
-    if (!res.ok) throw Object.assign(new Error(data.message || 'Login failed'), { status: res.status, data });
-    if (data.token) setToken(data.token);
-    return data;
+    try {
+      const url = API_BASE_URL + '/api/v1/auth/login';
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await res.json().catch(() => ({ message: 'Invalid response from server' }));
+      if (!res.ok) throw Object.assign(new Error(data.message || 'Login failed'), { status: res.status, data });
+      if (data.token) setToken(data.token);
+      return data;
+    } catch (err) {
+      if (err instanceof TypeError) {
+        throw Object.assign(new Error('Network error. Please check your connection and try again.'), { status: 0 });
+      }
+      throw err;
+    }
   }
 
   // --- Users ---
