@@ -2,7 +2,7 @@
 // Centralizes all backend API calls with auth token management.
 // Set window.API_BASE_URL before this script loads to override the default.
 
-const API_BASE_URL = window.API_BASE_URL || 'https://budgetbuddy-backend-production-81d7.up.railway.app/';
+const API_BASE_URL = window.API_BASE_URL || 'https://budgetbuddy-backend-production-81d7.up.railway.app';
 
 const api = (() => {
   const TOKEN_KEY = 'budgetBuddyAuthToken';
